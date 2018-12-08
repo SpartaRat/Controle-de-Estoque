@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-int main(void) {
+//Declaração de funções
+int main(void) { //Função principal
 	
 	
 	return 0;
