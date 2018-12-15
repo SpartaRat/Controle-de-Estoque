@@ -116,7 +116,7 @@ void cadastros() { //Função para cadastro
 				printf("Informe o novo telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					printf("\n\tAlteração realizada com sucesso\n")
+					printf("\n\tAlteração realizada com sucesso\n");
 					printf("=======================================\n"); system("pause");
 				system("cls");
 			}
