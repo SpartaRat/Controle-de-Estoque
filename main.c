@@ -84,17 +84,17 @@ void cadastros() { //Função para cadastro
 	switch(op) {
 		case 1:
 			if(!gQuantidadeCliente) {
-				lista_cliente[i].cod_cliente = rand() % 10;
+				lista_cliente[gQuantidadeCliente].cod_cliente = rand() % 10;
 				printf("Informe o endereço do cliente: ");
-				scanf("%[^\n]s", lista_cliente[i].endereco); setbuf(stdin, NULL);
+				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
-				scanf("%[^\n]s", lista_cliente[i].telefone); setbuf(stdin, NULL);
+				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 			}else {
-				lista_cliente[i].cod_cliente = lista_cliente[gQuantidadeCliente].cod_cliente + 1;
+				lista_cliente[gQuantidadeCliente].cod_cliente = lista_cliente[gQuantidadeCliente].cod_cliente + 1;
 				printf("Informe o endereço do cliente: ");
-				scanf("%[^\n]s", lista_cliente[i].endereco); setbuf(stdin, NULL);
+				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
-				scanf("%[^\n]s", lista_cliente[i].telefone); setbuf(stdin, NULL);
+				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 			}
 			gQuantidadeCliente++;
 		break;
@@ -112,9 +112,9 @@ void cadastros() { //Função para cadastro
 				printf("Informe qual cliente deseja alterar: ");
 				scanf("%i", &j); setbuf(stdin, NULL);
 				printf("Informe o novo endereço do cliente: ");
-				scanf("%[^\n]s", lista_cliente[i].endereco); setbuf(stdin, NULL);
+				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o novo telefone do cliente((dd) 9xxxx-xxxx): ");
-				scanf("%[^\n]s", lista_cliente[i].telefone); setbuf(stdin, NULL);
+				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
 					printf("\n\tAlteração realizada com sucesso\n")
 					printf("=======================================\n"); system("pause");
