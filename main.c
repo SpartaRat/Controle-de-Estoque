@@ -188,7 +188,12 @@ void insercaoDeMercadorias() {
 			printf("\tQuantidade do produto: ");
 			scanf("%i", &lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade); setbuf(stdin, NULL); system("cls");
 			if(j == 0) {
-				lista_produtos[i].quant_estoque -= lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade;
+				if(lista_produtos[i].quant_estoque >= lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade) {
+					lista_produtos[i].quant_estoque -= lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade;
+				}else {
+					lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade = lista_produtos[i].quant_estoque;
+					lista_produtos[i].quant_estoque = 0;
+				}
 				while(j == 0 && !resp) {
 					system("cls");
 					printf("Esse cliente comprou mais algum produto?\n");
@@ -212,7 +217,12 @@ void insercaoDeMercadorias() {
 					printf("\n\tProduto já cadastrado na nota.\n\tPor favor informe um produto diferente\n");
 					system("pause");
 				}else {
-					lista_produtos[i].quant_estoque -= lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade;
+					if(lista_produtos[i].quant_estoque >= lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade) {
+						lista_produtos[i].quant_estoque -= lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade;
+					}else {
+						lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade = lista_produtos[i].quant_estoque;
+						lista_produtos[i].quant_estoque = 0;
+					}
 					j++;
 				}
 			}
