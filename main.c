@@ -68,7 +68,13 @@ int main(void) { //Função principal
 			break;
 
 			case 2: //Função de movimentação
+				if(!gQuantidadeNotas) {
+					lista_notas[gQuantidadeNotas].numero_NF = rand() % 10000;
+				}else {
+					lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF;
+				}
 				//TODO: Chamar a função de movimentação
+				gQuantidadeNotas++;
 			break;
 
 			case 3: //Função de consultas
