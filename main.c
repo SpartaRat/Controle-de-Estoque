@@ -73,7 +73,7 @@ int main(void) { //Função principal
 				}else {
 					lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF;
 				}
-				//TODO: Chamar a função de movimentação
+				movimentacoes(); // Realiza a movimentação das notas
 				gQuantidadeNotas++;
 			break;
 
@@ -182,34 +182,38 @@ void insercaoDeMercadorias() {
 		}
 		printf("Informe qual produto foi comprado: ");
 		scanf("%i", &i); setbuf(stdin, NULL); system("cls");
-		lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto = lista_produtos[i].cod_produto;
-		lista_notas[gQuantidadeNotas].listaItensNotas[j].numero_NF = lista_notas[gQuantidadeNotas].numero_NF;
-		if(j == 0) {
-			while(j == 0 && !resp) {
-				system("cls");
-				printf("Esse cliente comprou mais algum produto?\n");
-		  		printf("\n%s SIM\n", (op == 0) ? "->" : " ");
-				printf("%s NÃO\n", (op == 1) ? "->" : " ");
-				key = getch();
-				if(key == KEY_UP && op > 0) {
-					op--;
-				}else if(key == KEY_DOWN && op < 1) {
-					op++;
-				}else if(key == KEY_ESC) {
-					resp = 1;
-				}else if(key == KEY_ENTER) {
-					j++;
-					resp = op;
+		if(i >= 0 && i < gQuantidadeProdutos) {
+			lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto = lista_produtos[i].cod_produto;
+			lista_notas[gQuantidadeNotas].listaItensNotas[j].numero_NF = lista_notas[gQuantidadeNotas].numero_NF;
+			if(j == 0) {
+				while(j == 0 && !resp) {
+					system("cls");
+					printf("Esse cliente comprou mais algum produto?\n");
+			  		printf("\n%s SIM\n", (op == 0) ? "->" : " ");
+					printf("%s NÃO\n", (op == 1) ? "->" : " ");
+					key = getch();
+					if(key == KEY_UP && op > 0) {
+						op--;
+					}else if(key == KEY_DOWN && op < 1) {
+						op++;
+					}else if(key == KEY_ESC) {
+						resp = 1;
+					}else if(key == KEY_ENTER) {
+						j++;
+						resp = op;
+					}
+					system("cls");
 				}
-				system("cls");
+			}else if(j==1){
+				if(lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto == lista_notas[gQuantidadeNotas].listaItensNotas[j-1].cod_produto){
+					printf("\n\tProduto já cadastrado na nota.\n\tPor favor informe um produto diferente\n");
+					system("pause");
+				}else {
+					j++;
+				}
 			}
-		}else if(j==1){
-			if(lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto == lista_notas[gQuantidadeNotas].listaItensNotas[j-1].cod_produto){
-				printf("\n\tProduto já cadastrado na nota.\n\tPor favor informe um produto diferente\n");
-				system("pause");
-			}else {
-				j++;
-			}
+		}else {
+			printf("\n\tErro: Produto não reconhecido\n");
 		}
 	}
 }
