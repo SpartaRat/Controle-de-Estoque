@@ -92,7 +92,7 @@ int main(void) { //Função principal
 }
 
 void cadastros() { //Função para cadastro
-	int j, op;
+	int i, j, op, perms = 1;
 
 	printf("\n========== Menu de Cadastros ==========\n");
 	printf("|=====================================|\n");
@@ -137,11 +137,11 @@ void cadastros() { //Função para cadastro
 			}else {
 				printf("\n\t======= Clientes cadastrados =======\n");
 				printf("\t====================================\n");
-				for(j=0; j<gQuantidadeCliente; j++) {
-					printf("\t\t| %02d | %d |\n", j, lista_cliente[j].cod_cliente);
+				for(i=0; i<gQuantidadeCliente; i++) {
+					printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
 				}
 				printf("Informe qual cliente deseja alterar: ");
-				scanf("%i", &j); setbuf(stdin, NULL);
+				scanf("%i", &i); setbuf(stdin, NULL);
 				printf("Informe o novo endereço do cliente: ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o novo telefone do cliente((dd) 9xxxx-xxxx): ");
@@ -154,7 +154,29 @@ void cadastros() { //Função para cadastro
 		break;
 
 		case 3: //Exclusão de cliente
-			//TODO: Exlcuir cliente que não possui nota fiscal registrada
+			printf("\n\t======= Clientes cadastrados =======\n");
+			printf("\t====================================\n");
+			for(i=0; i<gQuantidadeCliente; i++) {
+				printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
+			}
+			printf("Informe qual cliente deseja excluir: ");
+			scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+			for(j=0; j<gQuantidadeNotas; j++) {
+				if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
+					printf("Não é possivel excluir o cliente, pois ele possui notas em seu nome.\n");
+					perms = 0;
+					break;
+				}
+			}
+			if(perms == 1) {
+				while(i < gQuantidadeCliente) {
+					j = i+1;
+					lista_cliente[i].endereco = lista_cliente[j].endereco;
+					lista_cliente[i].telefone = lista_cliente[j].telefone;
+					lista_cliente[i].cod_cliente = lista_cliente[j].cod_cliente;
+					i++;
+				}
+			}
 		break;
 	}
 }
