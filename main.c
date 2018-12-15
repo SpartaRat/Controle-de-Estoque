@@ -47,7 +47,7 @@ int main(void) { //Função principal
 	setlocale(LC_ALL, "Portuguese");
 	srand(time(NULL));
 
-	int pause = 0, op;
+	int pause = 0, op = 1;
 
 	while(!pause) {
 		switch(op) {
@@ -80,6 +80,9 @@ void cadastros() { //Função para cadastro
 	printf("|     02      |        Alteração      |\n");
 	printf("|     03      |        exclusão       |\n");
 	printf("=======================================\n");
+	
+	printf("\n\nQual a opção desejada: ");
+	scanf("%i", &op); setbuf(stdin, NULL);
 
 	switch(op) {
 		case 1:
@@ -89,19 +92,25 @@ void cadastros() { //Função para cadastro
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
+				system("cls");
+					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
+				system("cls");
 			}else {
 				lista_cliente[gQuantidadeCliente].cod_cliente = lista_cliente[gQuantidadeCliente].cod_cliente + 1;
 				printf("Informe o endereço do cliente: ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
+				system("cls");
+					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
+				system("cls");
 			}
 			gQuantidadeCliente++;
 		break;
 		
 		case 2:
 			if(!gQuantidadeCliente) {
-				printf("\n\a\tNão existe nenhum cliente cadastrado até o momento!\n");
+				printf("\n\a\tNão existe nenhum cliente cadastrado até o momento!\n\n");
 				system("pause");
 			}else {
 				printf("\n\t======= Clientes cadastrados =======\n");
@@ -116,7 +125,7 @@ void cadastros() { //Função para cadastro
 				printf("Informe o novo telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					printf("\n\tAlteração realizada com sucesso\n");
+					printf("\n\tAlteração realizada com sucesso\n\n");
 					printf("=======================================\n"); system("pause");
 				system("cls");
 			}
