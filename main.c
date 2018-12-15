@@ -9,7 +9,7 @@
 #define QUANT_ITENS 6
 
 //Declaração de funções
-void cadastro(int i);
+void cadastros(int i);
 
 //Declaração de estruturas
 struct { //Estruturas para clientes
@@ -65,11 +65,11 @@ int main(void) { //Função principal
 	return 0;
 }
 
-void cadastro(int i) { //Função para cadastro
+void cadastros(int i) { //Função para cadastro
 
 }
 
-void movimentacao(int i) { //Função para movimentação
+void movimentacoes(int i) { //Função para movimentação
 
 }
 
