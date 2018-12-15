@@ -130,6 +130,10 @@ void cadastros() { //Função para cadastro
 				system("cls");
 			}
 		break;
+
+		case 3:
+			//TODO: Exlcuir cliente que não possui nota fiscal registrada
+		break;
 	}
 }
 
