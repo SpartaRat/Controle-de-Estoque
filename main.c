@@ -9,7 +9,7 @@
 #define QUANT_ITENS 6
 
 //Declaração de funções
-void cadastros(int i);
+void cadastros();
 
 //Declaração de variáveis globais
 int gQuantidadeCliente = 0;
@@ -69,8 +69,8 @@ int main(void) { //Função principal
 	return 0;
 }
 
-void cadastros(int i) { //Função para cadastro
-	int op;
+void cadastros() { //Função para cadastro
+	int j, op;
 
 	printf("\n========== Menu de Cadastros ==========\n");
 	printf("|=====================================|\n");
@@ -97,6 +97,29 @@ void cadastros(int i) { //Função para cadastro
 				scanf("%[^\n]s", lista_cliente[i].telefone); setbuf(stdin, NULL);
 			}
 			gQuantidadeCliente++;
+		break;
+		
+		case 2:
+			if(!gQuantidadeCliente) {
+				printf("\n\a\tNão existe nenhum cliente cadastrado até o momento!\n");
+				system("pause");
+			}else {
+				printf("\n\t======= Clientes cadastrados =======\n");
+				printf("\t====================================\n");
+				for(j=0; j<gQuantidadeCliente; j++) {
+					printf("\t\t| 0%i | %d |\n", j);
+				}
+				printf("Informe qual cliente deseja alterar: ");
+				scanf("%i", &j); setbuf(stdin, NULL);
+				printf("Informe o novo endereço do cliente: ");
+				scanf("%[^\n]s", lista_cliente[i].endereco); setbuf(stdin, NULL);
+				printf("Informe o novo telefone do cliente((dd) 9xxxx-xxxx): ");
+				scanf("%[^\n]s", lista_cliente[i].telefone); setbuf(stdin, NULL);
+				system("cls");
+					printf("\n\tAlteração realizada com sucesso\n")
+					printf("=======================================\n"); system("pause");
+				system("cls");
+			}
 		break;
 	}
 }
