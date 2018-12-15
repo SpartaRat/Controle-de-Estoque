@@ -11,6 +11,9 @@
 //Declaração de funções
 void cadastros(int i);
 
+//Declaração de variáveis globais
+int gQuantidadeCliente = 0;
+
 //Declaração de estruturas
 struct { //Estruturas para clientes
 	int cod_cliente;
@@ -42,6 +45,7 @@ struct { //Estruturas para cadastro de produtos
 //Criação de funções
 int main(void) { //Função principal
 	setlocale(LC_ALL, "Portuguese");
+	srand(time(NULL));
 
 	int pause = 0, op;
 
@@ -66,6 +70,8 @@ int main(void) { //Função principal
 }
 
 void cadastros(int i) { //Função para cadastro
+	int j, op, check;
+
 	printf("\n========== Menu de Cadastros ==========\n");
 	printf("|=====================================|\n");
 	printf("|  Código     |        Operação       |\n");
@@ -74,6 +80,25 @@ void cadastros(int i) { //Função para cadastro
 	printf("|     02      |        Alteração      |\n");
 	printf("|     03      |        exclusão       |\n");
 	printf("=======================================\n");
+
+	switch(op) {
+		case 1:
+			if(!gQuantidadeCliente) {
+				lista_cliente[i].cod_cliente = rand() % 10;
+				printf("Informe o endereço do cliente: ");
+				scanf("%[^\n]s", lista_cliente[i].endereco); setbuf(stdin, NULL);
+				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
+				scanf("%[^\n]s", lista_cliente[i].telefone); setbuf(stdin, NULL);
+			}else {
+				lista_cliente[i].cod_cliente = lista_cliente[gQuantidadeCliente].cod_cliente + 1;
+				printf("Informe o endereço do cliente: ");
+				scanf("%[^\n]s", lista_cliente[i].endereco); setbuf(stdin, NULL);
+				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
+				scanf("%[^\n]s", lista_cliente[i].telefone); setbuf(stdin, NULL);
+			}
+			gQuantidadeCliente++;
+		break;
+	}
 }
 
 void movimentacoes(int i) { //Função para movimentação
