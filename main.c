@@ -5,14 +5,23 @@
 #include <string.h>
 
 //Declaração de macros
-#define QUANT_NOTAS 10
-#define QUANT_ITENS 6
+#define QUANT_NOTAS 5
+#define QUANT_ITENS 2
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_ESC 27
+#define KEY_ENTER 13
 
 //Declaração de funções
 void cadastros();
+void movimentacoes();
+void consultas(int i);
+void insercaoDeMercadorias();
 
 //Declaração de variáveis globais
 int gQuantidadeCliente = 0;
+int gQuantidadeProdutos = 0;
+int gQuantidadeNotas = 0;
 
 //Declaração de estruturas
 struct { //Estruturas para clientes
@@ -21,18 +30,20 @@ struct { //Estruturas para clientes
 	char telefone[100];
 }clientes, lista_cliente[3];
 
-struct { //Estruturas para notas
-	int numero_NF;
-	int cod_cliente;
-	float total_geral;
-} notas, lista_notas[QUANT_NOTAS];
-
-struct { //Estruturas para itens das notas
+struct itens_notas{ //Estruturas para itens das notas
 	int numero_NF;
 	int cod_produto;
 	int quantidade;
 	float preco_venda;
-} itens_notas, lista_itens_notas[QUANT_ITENS];
+};
+
+struct { //Estruturas para notas
+	int numero_NF;
+	int cod_cliente;
+	float total_geral;
+	struct itens_notas listaItensNotas[QUANT_ITENS];
+} notas, lista_notas[QUANT_NOTAS];
+
 
 struct { //Estruturas para cadastro de produtos
 	int cod_produto;
@@ -47,7 +58,7 @@ int main(void) { //Função principal
 	setlocale(LC_ALL, "Portuguese");
 	srand(time(NULL));
 
-	int pause = 0, op = 1;
+	int pause = 0, op = 2;
 
 	while(!pause) {
 		switch(op) {
@@ -64,6 +75,7 @@ int main(void) { //Função principal
 				//TODO: Chamar a função de consultas
 			break;
 		}
+		pause = 1;
 	}
 
 	return 0;
@@ -85,7 +97,7 @@ void cadastros() { //Função para cadastro
 	scanf("%i", &op); setbuf(stdin, NULL);
 
 	switch(op) {
-		case 1:
+		case 1: // Cadastro de cliente
 			if(!gQuantidadeCliente) {
 				lista_cliente[gQuantidadeCliente].cod_cliente = rand() % 10;
 				printf("Informe o endereço do cliente: ");
@@ -108,7 +120,7 @@ void cadastros() { //Função para cadastro
 			gQuantidadeCliente++;
 		break;
 		
-		case 2:
+		case 2: //Alteração de cliente
 			if(!gQuantidadeCliente) {
 				printf("\n\a\tNão existe nenhum cliente cadastrado até o momento!\n\n");
 				system("pause");
@@ -116,7 +128,7 @@ void cadastros() { //Função para cadastro
 				printf("\n\t======= Clientes cadastrados =======\n");
 				printf("\t====================================\n");
 				for(j=0; j<gQuantidadeCliente; j++) {
-					printf("\t\t| 0%i | %d |\n", j);
+					printf("\t\t| %02d | %d |\n", j, lista_cliente[j].cod_cliente);
 				}
 				printf("Informe qual cliente deseja alterar: ");
 				scanf("%i", &j); setbuf(stdin, NULL);
@@ -131,16 +143,67 @@ void cadastros() { //Função para cadastro
 			}
 		break;
 
-		case 3:
+		case 3: //Exclusão de cliente
 			//TODO: Exlcuir cliente que não possui nota fiscal registrada
 		break;
 	}
 }
 
-void movimentacoes(int i) { //Função para movimentação
-
+void movimentacoes() { //Função para movimentação
+	int i;
+	printf("\n\t======= Clientes cadastrados =======\n");
+	printf("\t====================================\n");
+	for(i=0; i<gQuantidadeCliente; i++) {
+		printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
+	}
+	printf("Informe o cliente que realizou essa compra: ");
+	scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+	lista_notas[gQuantidadeNotas].cod_cliente = lista_cliente[i].cod_cliente;
+	insercaoDeMercadorias();
 }
 
 void consultas(int i) { //Função para consultas
 
+}
+
+void insercaoDeMercadorias() {
+	int resp = 0, op = 0, key, i, j = 0;
+	while(!resp &&  j < 2) {
+		printf("\n\t======= Produtos cadastrados =======\n");
+		printf("\t====================================\n");
+		for(i=0; i<gQuantidadeProdutos; i++) {
+			printf("\t\t| %02d | %d |\n", i, lista_produtos[i].cod_produto);
+		}
+		printf("Informe qual produto foi comprado: ");
+		scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+		lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto = lista_produtos[i].cod_produto;
+		lista_notas[gQuantidadeNotas].listaItensNotas[j].numero_NF = lista_notas[gQuantidadeNotas].numero_NF;
+		if(j == 0) {
+			while(j == 0 && !resp) {
+				system("cls");
+				printf("Esse cliente comprou mais algum produto?\n");
+		  		printf("\n%s SIM\n", (op == 0) ? "->" : " ");
+				printf("%s NÃO\n", (op == 1) ? "->" : " ");
+				key = getch();
+				if(key == KEY_UP && op > 0) {
+					op--;
+				}else if(key == KEY_DOWN && op < 1) {
+					op++;
+				}else if(key == KEY_ESC) {
+					resp = 1;
+				}else if(key == KEY_ENTER) {
+					j++;
+					resp = op;
+				}
+				system("cls");
+			}
+		}else if(j==1){
+			if(lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto == lista_notas[gQuantidadeNotas].listaItensNotas[j-1].cod_produto){
+				printf("\n\tProduto já cadastrado na nota.\n\tPor favor informe um produto diferente\n");
+				system("pause");
+			}else {
+				j++;
+			}
+		}
+	}
 }
