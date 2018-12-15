@@ -70,7 +70,7 @@ int main(void) { //Função principal
 }
 
 void cadastros(int i) { //Função para cadastro
-	int j, op, check;
+	int op;
 
 	printf("\n========== Menu de Cadastros ==========\n");
 	printf("|=====================================|\n");
