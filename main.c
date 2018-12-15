@@ -41,7 +41,7 @@ struct { //Estruturas para cadastro de produtos
 
 //Criação de funções
 int main(void) { //Função principal
-	setlocale(LC_ALL,"portugues");
+	setlocale(LC_ALL, "Portuguese");
 
 	int pause = 0, op;
 
@@ -66,7 +66,14 @@ int main(void) { //Função principal
 }
 
 void cadastros(int i) { //Função para cadastro
-
+	printf("\n========== Menu de Cadastros ==========\n");
+	printf("|=====================================|\n");
+	printf("|  Código     |        Operação       |\n");
+	printf("|=====================================|\n");
+	printf("|     01      |        Inclusão       |\n");
+	printf("|     02      |        Alteração      |\n");
+	printf("|     03      |        exclusão       |\n");
+	printf("=======================================\n");
 }
 
 void movimentacoes(int i) { //Função para movimentação
