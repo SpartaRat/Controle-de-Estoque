@@ -6,14 +6,14 @@
 
 //Declaração de macros
 #define QUANT_NOTAS 10
-#define QUANT_ITENS 10
+#define QUANT_ITENS 6
 
 //Declaração de funções
 void cadastro(int i);
 
 //Declaração de estruturas
 struct { //Estruturas para clientes
-	int cod_produto;
+	int cod_cliente;
 	char endereco[100];
 	char telefone[100];
 }clientes, lista_cliente[3];
