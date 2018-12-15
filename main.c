@@ -68,13 +68,17 @@ int main(void) { //Função principal
 			break;
 
 			case 2: //Função de movimentação
-				if(!gQuantidadeNotas) {
-					lista_notas[gQuantidadeNotas].numero_NF = rand() % 10000;
+				if(gQuantidadeNotas < 5) {
+					if(!gQuantidadeNotas) {
+						lista_notas[gQuantidadeNotas].numero_NF = rand() % 10000; //Gera um número de NF aleatorio para a primeira nota
+					}else {
+						lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF + 15; //Fixa um número de NF para a nota baseado na última nota emitida
+					}
+					movimentacoes(); // Realiza a movimentação das notas
+					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
 				}else {
-					lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF;
+					printf("\n\tNúmero máximo de notas atingido.\nNão permitido emitir novas notas\n");
 				}
-				movimentacoes(); // Realiza a movimentação das notas
-				gQuantidadeNotas++;
 			break;
 
 			case 3: //Função de consultas
