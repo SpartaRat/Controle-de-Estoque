@@ -197,7 +197,7 @@ void movimentacoes() { //Função para movimentação
 
 void consultas(int i) { //Função para consultas
 
-	int op, i;
+	int op, i, found = 0;
 	float min, max;
 
 	printf("\n========== Menu de Consultas =============\n");
@@ -218,8 +218,12 @@ void consultas(int i) { //Função para consultas
 			scanf("%f", &max); setbuf(stdin, NULL);
 			for(i=0; i<gQuantidadeProdutos; i++) {
 				if(lista_produtos[i].preco_unitario >= min && lista_produtos[i].preco_unitario <= max) {
+					found = 1;
 					printf("| Código do produto: %d | Quantidade em estoque: %d | Preço unitário: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
 				}
+			}
+			if(!found) {
+				printf("\a\tNão foi encontrado nenhum produto dentro dessa faixa de preço\n");
 			}
 		break;
 		
