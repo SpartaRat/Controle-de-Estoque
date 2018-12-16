@@ -64,7 +64,7 @@ int main(void) { //Função principal
 		switch(op) {
 			//TODO: Chamar o menu de opções principais
 			case 1://Função de cadastro
-				//TODO: Chamar a função de cadastro
+				cadastros();
 			break;
 
 			case 2: //Função de movimentação
@@ -75,7 +75,6 @@ int main(void) { //Função principal
 						lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF + 15; //Fixa um número de NF para a nota baseado na última nota emitida
 					}
 					movimentacoes(); // Realiza a movimentação das notas
-					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
 				}else {
 					printf("\n\tNúmero máximo de notas atingido.\nNão permitido emitir novas notas\n");
 				}
@@ -115,6 +114,7 @@ void cadastros() { //Função para cadastro
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
+					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
 					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
 				system("cls");
 			}else {
@@ -124,6 +124,7 @@ void cadastros() { //Função para cadastro
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
+					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
 					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
 				system("cls");
 			}
@@ -171,8 +172,8 @@ void cadastros() { //Função para cadastro
 			if(perms == 1) {
 				while(i < gQuantidadeCliente) {
 					j = i+1;
-					lista_cliente[i].endereco = lista_cliente[j].endereco;
-					lista_cliente[i].telefone = lista_cliente[j].telefone;
+					strcpy(lista_cliente[i].endereco, lista_cliente[j].endereco);
+					strcpy(lista_cliente[i].telefone, lista_cliente[j].telefone);
 					lista_cliente[i].cod_cliente = lista_cliente[j].cod_cliente;
 					i++;
 				}
