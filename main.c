@@ -15,7 +15,7 @@
 //Declaração de funções
 void cadastros();
 void movimentacoes();
-void consultas(int i);
+void consultas();
 void insercaoDeMercadorias();
 
 //Declaração de variáveis globais
@@ -196,7 +196,7 @@ void movimentacoes() { //Função para movimentação
 	insercaoDeMercadorias();
 }
 
-void consultas(int i) { //Função para consultas
+void consultas() { //Função para consultas
 
 	int op, i, j, k, found = 0;
 	float min, max, totalNota = 0;;
