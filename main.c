@@ -197,6 +197,14 @@ void movimentacoes() { //Função para movimentação
 
 void consultas(int i) { //Função para consultas
 
+	printf("\n========== Menu de Consultas =============\n");
+	printf("|==========================================|\n");
+	printf("|    Código   |           Operação         |\n");
+	printf("|==========================================|\n");
+	printf("|     01      |      Pesquisa por preço    |\n");
+	printf("|     02      |     Pesquisa por cliente   |\n");
+	printf("|     03      | Pesquisa por valor da nota |\n");
+	printf("============================================\n");
 }
 
 void insercaoDeMercadorias() {
