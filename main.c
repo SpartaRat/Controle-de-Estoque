@@ -41,6 +41,7 @@ struct { //Estruturas para notas
 	int numero_NF;
 	int cod_cliente;
 	float total_geral;
+	int quantidadeItensNota;
 	struct itens_notas listaItensNotas[QUANT_ITENS];
 } notas, lista_notas[QUANT_NOTAS];
 
@@ -197,8 +198,8 @@ void movimentacoes() { //Função para movimentação
 
 void consultas(int i) { //Função para consultas
 
-	int op, i, found = 0;
-	float min, max;
+	int op, i, j, k, found = 0;
+	float min, max, totalNota = 0;;
 
 	printf("\n========== Menu de Consultas =============\n");
 	printf("|==========================================|\n");
@@ -210,7 +211,7 @@ void consultas(int i) { //Função para consultas
 	printf("============================================\n");
 	
 	switch(op) {
-		case 1:
+		case 1: //Pesquisa por faixa de preço
 			printf("\tInforme uma faixa de preço para consulta: ");
 			printf("Preço minimo: ");
 			scanf("%f", &min); setbuf(stdin, NULL);
@@ -227,8 +228,27 @@ void consultas(int i) { //Função para consultas
 			}
 		break;
 		
-		case 2:
-			
+		case 2: //Pesquisa por cliente
+			printf("\n\t======= Clientes cadastrados =======\n");
+			printf("\t====================================\n");
+			for(i=0; i<gQuantidadeCliente; i++) {
+				printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
+			}
+			printf("\t====================================\n");
+			printf("Informe o cliente que deseja ver os dados: ");
+			scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+			for(j=0; j<gQuantidadeNotas; j++) {
+				if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
+					printf("\n========= Nota fiscal: %d ===========\n", lista_notas[j].numero_NF);
+					printf("\tItens da nota: \n");
+					for(k=0; k<lista_notas[j].quantidadeItensNota; k++) {
+						printf("\t| Código: %d | Preço de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[j].listaItensNotas[k].cod_produto, lista_notas[j].listaItensNotas[k].preco_venda, lista_notas[j].listaItensNotas[k].quantidade);
+						totalNota += (lista_notas[j].listaItensNotas[k].preco_venda * lista_notas[j].listaItensNotas[k].quantidade);
+					}
+					printf("Valor total: R$%.2f reais\n", totalNota);
+					printf("=======================================\n");
+				}
+			}
 		break;
 		
 		case 3:
@@ -254,6 +274,7 @@ void insercaoDeMercadorias() {
 		if(i >= 0 && i < gQuantidadeProdutos) {
 			lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto = lista_produtos[i].cod_produto;
 			lista_notas[gQuantidadeNotas].listaItensNotas[j].numero_NF = lista_notas[gQuantidadeNotas].numero_NF;
+			lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
 			printf("\tQuantidade do produto: ");
 			scanf("%i", &lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade); setbuf(stdin, NULL); system("cls");
 			if(j == 0) {
@@ -277,6 +298,7 @@ void insercaoDeMercadorias() {
 						resp = 1;
 					}else if(key == KEY_ENTER) {
 						j++;
+						lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
 						resp = op;
 					}
 					system("cls");
@@ -293,6 +315,7 @@ void insercaoDeMercadorias() {
 						lista_produtos[i].quant_estoque = 0;
 					}
 					j++;
+					lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
 				}
 			}
 		}else {
