@@ -197,6 +197,9 @@ void movimentacoes() { //Função para movimentação
 
 void consultas(int i) { //Função para consultas
 
+	int op, i;
+	float min, max;
+
 	printf("\n========== Menu de Consultas =============\n");
 	printf("|==========================================|\n");
 	printf("|    Código   |           Operação         |\n");
@@ -205,6 +208,33 @@ void consultas(int i) { //Função para consultas
 	printf("|     02      |     Pesquisa por cliente   |\n");
 	printf("|     03      | Pesquisa por valor da nota |\n");
 	printf("============================================\n");
+	
+	switch(op) {
+		case 1:
+			printf("\tInforme uma faixa de preço para consulta: ");
+			printf("Preço minimo: ");
+			scanf("%f", &min); setbuf(stdin, NULL);
+			printf("Preço máximo: ");
+			scanf("%f", &max); setbuf(stdin, NULL);
+			for(i=0; i<gQuantidadeProdutos; i++) {
+				if(lista_produtos[i].preco_unitario >= min && lista_produtos[i].preco_unitario <= max) {
+					printf("| Código do produto: %d | Quantidade em estoque: %d | Preço unitário: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
+				}
+			}
+		break;
+		
+		case 2:
+			
+		break;
+		
+		case 3:
+			
+		break;
+		
+		default:
+			printf("\a\tOpção Inválida\n");
+			system("pause");
+	}
 }
 
 void insercaoDeMercadorias() {
