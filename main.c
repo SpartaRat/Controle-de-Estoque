@@ -6,7 +6,7 @@
 #include<time.h>
 #include<conio.h>
 
-//DeclaraÃ§Ã£o de macros
+//Declaração de macros
 #define QUANT_NOTAS 5
 #define QUANT_ITENS 2
 #define KEY_UP 72
@@ -14,18 +14,18 @@
 #define KEY_ESC 27
 #define KEY_ENTER 13
 
-//DeclaraÃ§Ã£o de funÃ§Ãµes
+//Declaração de funções
 void cadastros();
 void movimentacoes();
 void consultas();
 void insercaoDeMercadorias();
 
-//DeclaraÃ§Ã£o de variÃ¡veis globais
+//Declaração de variáveis globais
 int gQuantidadeCliente = 0;
 int gQuantidadeProdutos = 0;
 int gQuantidadeNotas = 0;
 
-//DeclaraÃ§Ã£o de estruturas
+//Declaração de estruturas
 struct { //Estruturas para clientes
 	int cod_cliente;
 	char endereco[100];
@@ -56,8 +56,8 @@ struct { //Estruturas para cadastro de produtos
 	int quant_estoque;
 } produtos, lista_produtos[6];
 
-//CriaÃ§Ã£o de funÃ§Ãµes
-int main(void) { //FunÃ§Ã£o principal
+//Criação de funções
+int main(void) { //Função principal
 	setlocale(LC_ALL, "Portuguese");
 	srand(time(NULL));
 
@@ -65,26 +65,26 @@ int main(void) { //FunÃ§Ã£o principal
 
 	while(!pause) {
 		switch(op) {
-			//TODO: Chamar o menu de opÃ§Ãµes principais
-			case 1://FunÃ§Ã£o de cadastro
+			//TODO: Chamar o menu de opções principais
+			case 1://Função de cadastro
 				cadastros();
 			break;
 
-			case 2: //FunÃ§Ã£o de movimentaÃ§Ã£o
+			case 2: //Função de movimentação
 				if(gQuantidadeNotas < 5) {
 					if(!gQuantidadeNotas) {
-						lista_notas[gQuantidadeNotas].numero_NF = rand() % 10000; //Gera um nÃºmero de NF aleatorio para a primeira nota
+						lista_notas[gQuantidadeNotas].numero_NF = rand() % 10000; //Gera um número de NF aleatorio para a primeira nota
 					}else {
-						lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF + 15; //Fixa um nÃºmero de NF para a nota baseado na Ãºltima nota emitida
+						lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF + 15; //Fixa um número de NF para a nota baseado na última nota emitida
 					}
-					movimentacoes(); // Realiza a movimentaÃ§Ã£o das notas
+					movimentacoes(); // Realiza a movimentação das notas
 				}else {
-					printf("\n\tNÃºmero mÃ¡ximo de notas atingido.\nNÃ£o permitido emitir novas notas\n");
+					printf("\n\tNúmero máximo de notas atingido.\nNão permitido emitir novas notas\n");
 				}
 			break;
 
-			case 3: //FunÃ§Ã£o de consultas
-				//TODO: Chamar a funÃ§Ã£o de consultas
+			case 3: //Função de consultas
+				//TODO: Chamar a função de consultas
 			break;
 		}
 		pause = 1;
@@ -93,50 +93,50 @@ int main(void) { //FunÃ§Ã£o principal
 	return 0;
 }
 
-void cadastros() { //FunÃ§Ã£o para cadastro
+void cadastros() { //Função para cadastro
 	int i, j, op, perms = 1;
 
 	printf("\n========== Menu de Cadastros ==========\n");
 	printf("|=====================================|\n");
-	printf("|  CÃ³digo     |        OperaÃ§Ã£o       |\n");
+	printf("|  Código     |        Operação       |\n");
 	printf("|=====================================|\n");
-	printf("|     01      |        InclusÃ£o       |\n");
-	printf("|     02      |        AlteraÃ§Ã£o      |\n");
-	printf("|     03      |        exclusÃ£o       |\n");
+	printf("|     01      |        Inclusão       |\n");
+	printf("|     02      |        Alteração      |\n");
+	printf("|     03      |        exclusão       |\n");
 	printf("=======================================\n");
 	
-	printf("\n\nQual a opÃ§Ã£o desejada: ");
+	printf("\n\nQual a opção desejada: ");
 	scanf("%i", &op); setbuf(stdin, NULL);
 
 	switch(op) {
 		case 1: // Cadastro de cliente
 			if(!gQuantidadeCliente) {
 				lista_cliente[gQuantidadeCliente].cod_cliente = rand() % 10;
-				printf("Informe o endereÃ§o do cliente: ");
+				printf("Informe o endereço do cliente: ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					gQuantidadeNotas++; //Incrementa o nÃºmero de notas jÃ¡ emitidas
+					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
 					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
 				system("cls");
 			}else {
 				lista_cliente[gQuantidadeCliente].cod_cliente = lista_cliente[gQuantidadeCliente].cod_cliente + 1;
-				printf("Informe o endereÃ§o do cliente: ");
+				printf("Informe o endereço do cliente: ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					gQuantidadeNotas++; //Incrementa o nÃºmero de notas jÃ¡ emitidas
+					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
 					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
 				system("cls");
 			}
 			gQuantidadeCliente++;
 		break;
 		
-		case 2: //AlteraÃ§Ã£o de cliente
+		case 2: //Alteração de cliente
 			if(!gQuantidadeCliente) {
-				printf("\n\a\tNÃ£o existe nenhum cliente cadastrado atÃ© o momento!\n\n");
+				printf("\n\a\tNão existe nenhum cliente cadastrado até o momento!\n\n");
 				system("pause");
 			}else {
 				printf("\n\t======= Clientes cadastrados =======\n");
@@ -146,18 +146,18 @@ void cadastros() { //FunÃ§Ã£o para cadastro
 				}
 				printf("Informe qual cliente deseja alterar: ");
 				scanf("%i", &i); setbuf(stdin, NULL);
-				printf("Informe o novo endereÃ§o do cliente: ");
+				printf("Informe o novo endereço do cliente: ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o novo telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					printf("\n\tAlteraÃ§Ã£o realizada com sucesso\n\n");
+					printf("\n\tAlteração realizada com sucesso\n\n");
 					printf("=======================================\n"); system("pause");
 				system("cls");
 			}
 		break;
 
-		case 3: //ExclusÃ£o de cliente
+		case 3: //Exclusão de cliente
 			printf("\n\t======= Clientes cadastrados =======\n");
 			printf("\t====================================\n");
 			for(i=0; i<gQuantidadeCliente; i++) {
@@ -167,7 +167,7 @@ void cadastros() { //FunÃ§Ã£o para cadastro
 			scanf("%i", &i); setbuf(stdin, NULL); system("cls");
 			for(j=0; j<gQuantidadeNotas; j++) {
 				if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
-					printf("NÃ£o Ã© possivel excluir o cliente, pois ele possui notas em seu nome.\n");
+					printf("Não é possivel excluir o cliente, pois ele possui notas em seu nome.\n");
 					perms = 0;
 					break;
 				}
@@ -185,7 +185,7 @@ void cadastros() { //FunÃ§Ã£o para cadastro
 	}
 }
 
-void movimentacoes() { //FunÃ§Ã£o para movimentaÃ§Ã£o
+void movimentacoes() { //Função para movimentação
 	int i;
 	printf("\n\t======= Clientes cadastrados =======\n");
 	printf("\t====================================\n");
@@ -198,35 +198,35 @@ void movimentacoes() { //FunÃ§Ã£o para movimentaÃ§Ã£o
 	insercaoDeMercadorias();
 }
 
-void consultas() { //FunÃ§Ã£o para consultas
+void consultas() { //Função para consultas
 
 	int op, i, j, k, found = 0;
 	float min, max, totalNota = 0;;
 
 	printf("\n========== Menu de Consultas =============\n");
 	printf("|==========================================|\n");
-	printf("|    CÃ³digo   |           OperaÃ§Ã£o         |\n");
+	printf("|    Código   |           Operação         |\n");
 	printf("|==========================================|\n");
-	printf("|     01      |      Pesquisa por preÃ§o    |\n");
+	printf("|     01      |      Pesquisa por preço    |\n");
 	printf("|     02      |     Pesquisa por cliente   |\n");
 	printf("|     03      | Pesquisa por valor da nota |\n");
 	printf("============================================\n");
 	
 	switch(op) {
-		case 1: //Pesquisa por faixa de preÃ§o
-			printf("\tInforme uma faixa de preÃ§o para consulta: ");
-			printf("PreÃ§o minimo: ");
+		case 1: //Pesquisa por faixa de preço
+			printf("\tInforme uma faixa de preço para consulta: ");
+			printf("Preço minimo: ");
 			scanf("%f", &min); setbuf(stdin, NULL);
-			printf("PreÃ§o mÃ¡ximo: ");
+			printf("Preço máximo: ");
 			scanf("%f", &max); setbuf(stdin, NULL);
 			for(i=0; i<gQuantidadeProdutos; i++) {
 				if(lista_produtos[i].preco_unitario >= min && lista_produtos[i].preco_unitario <= max) {
 					found = 1;
-					printf("| CÃ³digo do produto: %d | Quantidade em estoque: %d | PreÃ§o unitÃ¡rio: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
+					printf("| Código do produto: %d | Quantidade em estoque: %d | Preço unitário: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
 				}
 			}
 			if(!found) {
-				printf("\a\tNÃ£o foi encontrado nenhum produto dentro dessa faixa de preÃ§o\n");
+				printf("\a\tNão foi encontrado nenhum produto dentro dessa faixa de preço\n");
 			}
 		break;
 		
@@ -244,7 +244,7 @@ void consultas() { //FunÃ§Ã£o para consultas
 					printf("\n========= Nota fiscal: %d ===========\n", lista_notas[j].numero_NF);
 					printf("\tItens da nota: \n");
 					for(k=0; k<lista_notas[j].quantidadeItensNota; k++) {
-						printf("\t| CÃ³digo: %d | PreÃ§o de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[j].listaItensNotas[k].cod_produto, lista_notas[j].listaItensNotas[k].preco_venda, lista_notas[j].listaItensNotas[k].quantidade);
+						printf("\t| Código: %d | Preço de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[j].listaItensNotas[k].cod_produto, lista_notas[j].listaItensNotas[k].preco_venda, lista_notas[j].listaItensNotas[k].quantidade);
 						totalNota += (lista_notas[j].listaItensNotas[k].preco_venda * lista_notas[j].listaItensNotas[k].quantidade);
 					}
 					printf("Valor total: R$%.2f reais\n", totalNota);
@@ -258,7 +258,7 @@ void consultas() { //FunÃ§Ã£o para consultas
 		break;
 		
 		default:
-			printf("\a\tOpÃ§Ã£o InvÃ¡lida\n");
+			printf("\a\tOpção Inválida\n");
 			system("pause");
 	}
 }
@@ -290,7 +290,7 @@ void insercaoDeMercadorias() {
 					system("cls");
 					printf("Esse cliente comprou mais algum produto?\n");
 			  		printf("\n%s SIM\n", (op == 0) ? "->" : " ");
-					printf("%s NÃƒO\n", (op == 1) ? "->" : " ");
+					printf("%s NÃO\n", (op == 1) ? "->" : " ");
 					key = getch();
 					if(key == KEY_UP && op > 0) {
 						op--;
@@ -307,7 +307,7 @@ void insercaoDeMercadorias() {
 				}
 			}else if(j==1){
 				if(lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto == lista_notas[gQuantidadeNotas].listaItensNotas[j-1].cod_produto){
-					printf("\n\tProduto jÃ¡ cadastrado na nota.\n\tPor favor informe um produto diferente\n");
+					printf("\n\tProduto já cadastrado na nota.\n\tPor favor informe um produto diferente\n");
 					system("pause");
 				}else {
 					if(lista_produtos[i].quant_estoque >= lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade) {
@@ -321,7 +321,7 @@ void insercaoDeMercadorias() {
 				}
 			}
 		}else {
-			printf("\n\tErro: Produto nÃ£o reconhecido\n");
+			printf("\n\tErro: Produto não reconhecido\n");
 		}
 	}
 }
