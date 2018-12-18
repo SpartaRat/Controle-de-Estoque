@@ -19,6 +19,7 @@ void cadastros();
 void movimentacoes();
 void consultas();
 void insercaoDeMercadorias();
+int menuPrincipal();
 
 //Declaração de variáveis globais
 int gQuantidadeCliente = 0;
@@ -64,17 +65,7 @@ int main(void) { //Função principal
 	int pause = 0, op = 2;
 
 	while(!pause) {
-		printf("\n========== Menu de Cadastros ==========\n");
-		printf("|=====================================|\n");
-		printf("|  Código     |        Operação       |\n");
-		printf("|=====================================|\n");
-		printf("|     01      |        Cadastro       |\n");
-		printf("|     02      |      Movimentação     |\n");
-		printf("|     03      |        Consulta       |\n");
-		printf("|     04      |          Sair         |\n");
-		printf("=======================================\n");
-		printf("\nInforme a opção desejada: ");
-		scanf("%i", &op); setbuf(stdin, NULL);
+		op = menuPrincipal();
 		switch(op) {
 			case 1://Função de cadastro
 				cadastros();
@@ -221,7 +212,7 @@ void consultas() { //Função para consultas
 	int op, i, j, k, found = 0;
 	float min, max, totalNota = 0, valor;
 
-	printf("\n========== Menu de Consultas =============\n");
+	printf("\n========== Menu de Consultas ==============\n");
 	printf("|==========================================|\n");
 	printf("|    Código   |           Operação         |\n");
 	printf("|==========================================|\n");
@@ -377,4 +368,33 @@ void insercaoDeMercadorias() {
 		}
 	}
 	gQuantidadeNotas++;
+}
+
+int menuPrincipal() {
+	int op = 1, key, resp;
+	while(1) {
+		system("cls");
+		printf("\nInforme a opção desejada:\n");
+		printf("\n========== Menu de Cadastros ==========\n");
+		printf("|=====================================|\n");
+		printf("|  Código     |        Operação       |\n");
+		printf("|=====================================|\n");
+		printf("|     %s      |        Cadastro       |\n", (op == 1) ? "->" : "01");
+		printf("|     %s      |      Movimentação     |\n", (op == 2) ? "->" : "02");
+		printf("|     %s      |        Consulta       |\n", (op == 3) ? "->" : "03");
+		printf("|     %s      |          Sair         |\n", (op == 4) ? "->" : "04");
+		printf("=======================================\n");
+		key = getch();
+		if(key == KEY_UP && op > 1) {
+			op--;
+		}else if(key == KEY_DOWN && op < 4) {
+			op++;
+		}else if(key == KEY_ESC) {
+			return 4;
+		}else if(key == KEY_ENTER) {
+			resp = op;
+			return resp;
+		}
+	}
+	system("cls");
 }
