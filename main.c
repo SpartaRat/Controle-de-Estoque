@@ -282,7 +282,7 @@ void consultas() { //Função para consultas
 					totalNota = 0;
 				}
 			}else {
-				printf("\n\tNão existe nenhuma cadastrada...\n");
+				printf("\n\tNão existe nenhuma nota cadastrada...\n");
 			}
 		break;
 		
