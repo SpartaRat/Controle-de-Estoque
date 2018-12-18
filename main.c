@@ -215,62 +215,74 @@ void consultas() { //Função para consultas
 	
 	switch(op) {
 		case 1: //Pesquisa por faixa de preço
-			printf("\tInforme uma faixa de preço para consulta: ");
-			printf("Preço minimo: ");
-			scanf("%f", &min); setbuf(stdin, NULL);
-			printf("Preço máximo: ");
-			scanf("%f", &max); setbuf(stdin, NULL);
-			for(i=0; i<gQuantidadeProdutos; i++) {
-				if(lista_produtos[i].preco_unitario >= min && lista_produtos[i].preco_unitario <= max) {
-					found = 1;
-					printf("| Código do produto: %d | Quantidade em estoque: %d | Preço unitário: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
+			if(gQuantidadeProdutos) {
+				printf("\tInforme uma faixa de preço para consulta: ");
+				printf("Preço minimo: ");
+				scanf("%f", &min); setbuf(stdin, NULL);
+				printf("Preço máximo: ");
+				scanf("%f", &max); setbuf(stdin, NULL);
+				for(i=0; i<gQuantidadeProdutos; i++) {
+					if(lista_produtos[i].preco_unitario >= min && lista_produtos[i].preco_unitario <= max) {
+						found = 1;
+						printf("| Código do produto: %d | Quantidade em estoque: %d | Preço unitário: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
+					}
 				}
-			}
-			if(!found) {
-				printf("\a\tNão foi encontrado nenhum produto dentro dessa faixa de preço\n");
+				if(!found) {
+					printf("\a\tNão foi encontrado nenhum produto dentro dessa faixa de preço\n");
+				}
+			}else {
+				printf("\n\tNão existe nenhum produto registrado...\n");
 			}
 		break;
 		
 		case 2: //Pesquisa por cliente
-			printf("\n\t======= Clientes cadastrados =======\n");
-			printf("\t====================================\n");
-			for(i=0; i<gQuantidadeCliente; i++) {
-				printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
-			}
-			printf("\t====================================\n");
-			printf("Informe o cliente que deseja ver os dados: ");
-			scanf("%i", &i); setbuf(stdin, NULL); system("cls");
-			for(j=0; j<gQuantidadeNotas; j++) {
-				if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
-					printf("\n========= Nota fiscal: %d ===========\n", lista_notas[j].numero_NF);
-					printf("\tItens da nota: \n");
-					for(k=0; k<lista_notas[j].quantidadeItensNota; k++) {
-						printf("\t| Código: %d | Preço de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[j].listaItensNotas[k].cod_produto, lista_notas[j].listaItensNotas[k].preco_venda, lista_notas[j].listaItensNotas[k].quantidade);
-						totalNota += (lista_notas[j].listaItensNotas[k].preco_venda * lista_notas[j].listaItensNotas[k].quantidade);
-					}
-					printf("Valor total: R$%.2f reais\n", totalNota);
-					printf("=======================================\n");
+			if(gQuantidadeCliente) {
+				printf("\n\t======= Clientes cadastrados =======\n");
+				printf("\t====================================\n");
+				for(i=0; i<gQuantidadeCliente; i++) {
+					printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
 				}
+				printf("\t====================================\n");
+				printf("Informe o cliente que deseja ver os dados: ");
+				scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+				for(j=0; j<gQuantidadeNotas; j++) {
+					if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
+						printf("\n========= Nota fiscal: %d ===========\n", lista_notas[j].numero_NF);
+						printf("\tItens da nota: \n");
+						for(k=0; k<lista_notas[j].quantidadeItensNota; k++) {
+							printf("\t| Código: %d | Preço de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[j].listaItensNotas[k].cod_produto, lista_notas[j].listaItensNotas[k].preco_venda, lista_notas[j].listaItensNotas[k].quantidade);
+							totalNota += (lista_notas[j].listaItensNotas[k].preco_venda * lista_notas[j].listaItensNotas[k].quantidade);
+						}
+						printf("Valor total: R$%.2f reais\n", totalNota);
+						printf("=======================================\n");
+					}
+				}
+			}else {
+				printf("\n\tNão existe nenhum cliente cadastro...\n");
 			}
 		break;
 		
 		case 3: //Pesquisa por valor da nota
-			printf("Informe um valor para consulta de notas: ");
-			scanf("%f", &valor); setbuf(stdin, NULL); system("cls");
-			for(i=0; i<gQuantidadeNotas; i++) {
-				for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
-					totalNota += (lista_notas[i].listaItensNotas[j].preco_venda * lista_notas[i].listaItensNotas[j].quantidade);
-				}
-				if(totalNota > valor) {
-					printf("\n========= Nota fiscal: %d ===========\n", lista_notas[i].numero_NF);
-					printf("\tItens da nota: \n");
+			if(gQuantidadeNotas) {
+				printf("Informe um valor para consulta de notas: ");
+				scanf("%f", &valor); setbuf(stdin, NULL); system("cls");
+				for(i=0; i<gQuantidadeNotas; i++) {
 					for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
-						printf("\t| Código: %d | Preço de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[i].listaItensNotas[j].cod_produto, lista_notas[i].listaItensNotas[j].preco_venda, lista_notas[i].listaItensNotas[j].quantidade);
+						totalNota += (lista_notas[i].listaItensNotas[j].preco_venda * lista_notas[i].listaItensNotas[j].quantidade);
 					}
-					printf("Valor total: R$%.2f reais\n", totalNota);
-					printf("=======================================\n");
+					if(totalNota > valor) {
+						printf("\n========= Nota fiscal: %d ===========\n", lista_notas[i].numero_NF);
+						printf("\tItens da nota: \n");
+						for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
+							printf("\t| Código: %d | Preço de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[i].listaItensNotas[j].cod_produto, lista_notas[i].listaItensNotas[j].preco_venda, lista_notas[i].listaItensNotas[j].quantidade);
+						}
+						printf("Valor total: R$%.2f reais\n", totalNota);
+						printf("=======================================\n");
+					}
+					totalNota = 0;
 				}
-				totalNota = 0;
+			}else {
+				printf("\n\tNão existe nenhuma cadastrada...\n");
 			}
 		break;
 		
