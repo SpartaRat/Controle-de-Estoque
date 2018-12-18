@@ -84,7 +84,7 @@ int main(void) { //Função principal
 			break;
 
 			case 3: //Função de consultas
-				//TODO: Chamar a função de consultas
+				consultas();
 			break;
 		}
 		pause = 1;
@@ -201,7 +201,7 @@ void movimentacoes() { //Função para movimentação
 void consultas() { //Função para consultas
 
 	int op, i, j, k, found = 0;
-	float min, max, totalNota = 0;;
+	float min, max, totalNota = 0, valor;
 
 	printf("\n========== Menu de Consultas =============\n");
 	printf("|==========================================|\n");
@@ -253,8 +253,24 @@ void consultas() { //Função para consultas
 			}
 		break;
 		
-		case 3:
-			
+		case 3: //Pesquisa por valor da nota
+			printf("Informe um valor para consulta de notas: ");
+			scanf("%f", &valor); setbuf(stdin, NULL); system("cls");
+			for(i=0; i<gQuantidadeNotas; i++) {
+				for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
+					totalNota += (lista_notas[i].listaItensNotas[j].preco_venda * lista_notas[i].listaItensNotas[j].quantidade);
+				}
+				if(totalNota > valor) {
+					printf("\n========= Nota fiscal: %d ===========\n", lista_notas[i].numero_NF);
+					printf("\tItens da nota: \n");
+					for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
+						printf("\t| Código: %d | Preço de venda: R$%.2f reais | Quantidade: %d\n", lista_notas[i].listaItensNotas[j].cod_produto, lista_notas[i].listaItensNotas[j].preco_venda, lista_notas[i].listaItensNotas[j].quantidade);
+					}
+					printf("Valor total: R$%.2f reais\n", totalNota);
+					printf("=======================================\n");
+				}
+				totalNota = 0;
+			}
 		break;
 		
 		default:
