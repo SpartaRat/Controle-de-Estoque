@@ -260,6 +260,8 @@ void consultas() { //Função para consultas
 				}
 				if(!found) {
 					printf("\nNão foi encontrado nenhuma nota no nome do cliente selecionado...\n");
+				}else {
+					found = 0;
 				}
 			}else {
 				printf("\n\tNão existe nenhum cliente cadastro...\n");
@@ -357,4 +359,5 @@ void insercaoDeMercadorias() {
 			printf("\n\tErro: Produto não reconhecido\n");
 		}
 	}
+	gQuantidadeNotas++;
 }
