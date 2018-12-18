@@ -236,7 +236,7 @@ void consultas() { //Função para consultas
 		break;
 		
 		case 2: //Pesquisa por cliente
-			if(gQuantidadeCliente) {
+			if(gQuantidadeCliente && gQuantidadeNotas) {
 				printf("\n\t======= Clientes cadastrados =======\n");
 				printf("\t====================================\n");
 				for(i=0; i<gQuantidadeCliente; i++) {
