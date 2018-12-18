@@ -95,7 +95,6 @@ int main(void) { //Função principal
 				system("pause");
 			break;
 		}
-		pause = 1;
 	}
 
 	return 0;
@@ -208,20 +207,34 @@ void movimentacoes() { //Função para movimentação
 }
 
 void consultas() { //Função para consultas
-
-	int op, i, j, k, found = 0;
+	int operacao = 1, i, j, k, found = 0, key;
 	float min, max, totalNota = 0, valor;
 
-	printf("\n========== Menu de Consultas ==============\n");
-	printf("|==========================================|\n");
-	printf("|    Código   |           Operação         |\n");
-	printf("|==========================================|\n");
-	printf("|     01      |      Pesquisa por preço    |\n");
-	printf("|     02      |     Pesquisa por cliente   |\n");
-	printf("|     03      | Pesquisa por valor da nota |\n");
-	printf("============================================\n");
+	while(1) {
+		system("cls");
+		printf("\nInfome a opção desejada:\n");
+		printf("\n========== Menu de Consultas ===============\n");
+		printf("|==========================================|\n");
+		printf("|    Código   |           Operação         |\n");
+		printf("|==========================================|\n");
+		printf("|     %s      |      Pesquisa por preço    |\n", (operacao == 1) ? "->" : "01");
+		printf("|     %s      |     Pesquisa por cliente   |\n", (operacao == 2) ? "->" : "02");
+		printf("|     %s      | Pesquisa por valor da nota |\n", (operacao == 3) ? "->" : "03");
+		printf("|     %s      | Voltar para menu principal |\n", (operacao == 4) ? "->" : "04");
+		printf("============================================\n");
+ 		key = getch();
+		if(key == KEY_UP && operacao > 1) {
+			operacao--;
+		}else if(key == KEY_DOWN && operacao < 4) {
+			operacao++;
+		}else if(key == KEY_ESC) {
+			break;
+		}else if(key == KEY_ENTER) {
+			break;
+		}
+	}
 	
-	switch(op) {
+	switch(operacao) {
 		case 1: //Pesquisa por faixa de preço
 			if(gQuantidadeProdutos) {
 				printf("\tInforme uma faixa de preço para consulta: ");
@@ -298,6 +311,10 @@ void consultas() { //Função para consultas
 			}else {
 				printf("\n\tNão existe nenhuma nota cadastrada...\n");
 			}
+		break;
+		
+		case 4:
+			system("cls");
 		break;
 		
 		default:
@@ -390,11 +407,12 @@ int menuPrincipal() {
 		}else if(key == KEY_DOWN && op < 4) {
 			op++;
 		}else if(key == KEY_ESC) {
+			system("cls");
 			return 4;
 		}else if(key == KEY_ENTER) {
 			resp = op;
+			system("cls");
 			return resp;
 		}
 	}
-	system("cls");
 }
