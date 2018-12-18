@@ -64,8 +64,18 @@ int main(void) { //Função principal
 	int pause = 0, op = 2;
 
 	while(!pause) {
+		printf("\n========== Menu de Cadastros ==========\n");
+		printf("|=====================================|\n");
+		printf("|  Código     |        Operação       |\n");
+		printf("|=====================================|\n");
+		printf("|     01      |        Cadastro       |\n");
+		printf("|     02      |      Movimentação     |\n");
+		printf("|     03      |        Consulta       |\n");
+		printf("|     04      |          Sair         |\n");
+		printf("=======================================\n");
+		printf("\nInforme a opção desejada: ");
+		scanf("%i", &op); setbuf(stdin, NULL);
 		switch(op) {
-			//TODO: Chamar o menu de opções principais
 			case 1://Função de cadastro
 				cadastros();
 			break;
@@ -85,6 +95,13 @@ int main(void) { //Função principal
 
 			case 3: //Função de consultas
 				consultas();
+			break;
+
+			case 4:
+				pause = 1;
+				printf("\n\tPrograma finalizado com sucesso...\n\n");
+				printf("\t");
+				system("pause");
 			break;
 		}
 		pause = 1;
