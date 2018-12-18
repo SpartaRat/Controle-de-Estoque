@@ -179,6 +179,7 @@ void cadastros() { //Função para cadastro
 					strcpy(lista_cliente[i].telefone, lista_cliente[j].telefone);
 					lista_cliente[i].cod_cliente = lista_cliente[j].cod_cliente;
 					i++;
+					gQuantidadeCliente--;
 				}
 			}
 		break;
