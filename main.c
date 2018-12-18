@@ -247,6 +247,7 @@ void consultas() { //Função para consultas
 				scanf("%i", &i); setbuf(stdin, NULL); system("cls");
 				for(j=0; j<gQuantidadeNotas; j++) {
 					if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
+						found = 1;
 						printf("\n========= Nota fiscal: %d ===========\n", lista_notas[j].numero_NF);
 						printf("\tItens da nota: \n");
 						for(k=0; k<lista_notas[j].quantidadeItensNota; k++) {
@@ -254,8 +255,11 @@ void consultas() { //Função para consultas
 							totalNota += (lista_notas[j].listaItensNotas[k].preco_venda * lista_notas[j].listaItensNotas[k].quantidade);
 						}
 						printf("Valor total: R$%.2f reais\n", totalNota);
-						printf("=======================================\n");
+						printf("=======================================\n\n");
 					}
+				}
+				if(!found) {
+					printf("\nNão foi encontrado nenhuma nota no nome do cliente selecionado...\n");
 				}
 			}else {
 				printf("\n\tNão existe nenhum cliente cadastro...\n");
