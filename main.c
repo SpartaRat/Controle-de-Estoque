@@ -100,15 +100,14 @@ int main(void) { //Função principal
 			case 5:
 				pause = 1;
 				printf("\n\tPrograma finalizado com sucesso...\n\n");
-				printf("\t");
-				system("pause");
 			break;
 
 			default:
 				printf("\a\n\t\tOpção Inválida...\n");
-				system("pause");
-				system("cls");
 		}
+		printf("\t");
+		system("pause");
+		system("cls");
 	}
 
 	return 0;
@@ -138,27 +137,25 @@ void cadastros() { //Função para cadastro
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
-					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
-				system("cls");
-			}else {
-				lista_cliente[gQuantidadeCliente].cod_cliente = lista_cliente[gQuantidadeCliente].cod_cliente + 1;
+				printf("\n\tCliente cadastrado com sucesso!\n\n");
+				gQuantidadeCliente++;
+			}else if(gQuantidadeCliente < 3 && gQuantidadeCliente != 0){
+				lista_cliente[gQuantidadeCliente].cod_cliente = lista_cliente[gQuantidadeCliente - 1].cod_cliente + 3;
 				printf("Informe o endereço do cliente: ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].endereco); setbuf(stdin, NULL);
 				printf("Informe o telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					gQuantidadeNotas++; //Incrementa o número de notas já emitidas
-					printf("\n\tCliente cadastrado com sucesso!\n\n"); system("pause");
-				system("cls");
+				printf("\n\tCliente cadastrado com sucesso!\n\n");
+				gQuantidadeCliente++;
+			}else {
+				printf("\a\n\tLimite máximo de cadastro atingido!\n\n");
 			}
-			gQuantidadeCliente++;
 		break;
 		
 		case 2: //Alteração de cliente
 			if(!gQuantidadeCliente) {
 				printf("\n\a\tNão existe nenhum cliente cadastrado até o momento!\n\n");
-				system("pause");
 			}else {
 				printf("\n\t======= Clientes cadastrados =======\n");
 				printf("\t====================================\n");
@@ -172,9 +169,8 @@ void cadastros() { //Função para cadastro
 				printf("Informe o novo telefone do cliente((dd) 9xxxx-xxxx): ");
 				scanf("%[^\n]s", lista_cliente[gQuantidadeCliente].telefone); setbuf(stdin, NULL);
 				system("cls");
-					printf("\n\tAlteração realizada com sucesso\n\n");
-					printf("=======================================\n"); system("pause");
-				system("cls");
+				printf("\n\tAlteração realizada com sucesso\n\n");
+				printf("=======================================\n");
 			}
 		break;
 
