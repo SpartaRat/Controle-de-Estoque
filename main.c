@@ -20,6 +20,7 @@ void movimentacoes();
 void consultas();
 void insercaoDeMercadorias();
 int menuPrincipal();
+void cadastroProduto();
 
 //Declaração de variáveis globais
 int gQuantidadeCliente = 0;
@@ -89,11 +90,24 @@ int main(void) { //Função principal
 			break;
 
 			case 4:
+				if(gQuantidadeProdutos < 6){
+					cadastroProduto();
+				}else {
+					printf("\a\n\tNão é possivel cadastrar mais produtos!\n");
+				}
+			break;
+			
+			case 5:
 				pause = 1;
 				printf("\n\tPrograma finalizado com sucesso...\n\n");
 				printf("\t");
 				system("pause");
 			break;
+
+			default:
+				printf("\a\n\t\tOpção Inválida...\n");
+				system("pause");
+				system("cls");
 		}
 	}
 
@@ -191,6 +205,24 @@ void cadastros() { //Função para cadastro
 			}
 		break;
 	}
+}
+
+void cadastroProduto() {
+	system("cls");
+	if(!gQuantidadeProdutos) {
+		lista_produtos[gQuantidadeProdutos].cod_produto = rand() % 10000;
+	}else {
+		lista_produtos[gQuantidadeProdutos].cod_produto = lista_produtos[gQuantidadeProdutos-1].cod_produto + 10;
+	}
+	printf("Faça uma pequena descrição desse produto: ");
+	scanf("%[^\n]s", lista_produtos[gQuantidadeProdutos].descricao); setbuf(stdin, NULL);
+	printf("Informe a unidade: ");
+	scanf("%[^\n]s", lista_produtos[gQuantidadeProdutos].unidade); setbuf(stdin, NULL);
+	printf("Informe o preço unitário: ");
+	scanf("%f", &lista_produtos[gQuantidadeProdutos].preco_unitario); setbuf(stdin, NULL);
+	printf("Informe a quantidade em estoque: ");
+	scanf("%i", &lista_produtos[gQuantidadeProdutos].quant_estoque); setbuf(stdin, NULL);
+ 	gQuantidadeProdutos++;
 }
 
 void movimentacoes() { //Função para movimentação
@@ -399,16 +431,17 @@ int menuPrincipal() {
 		printf("|     %s      |        Cadastro       |\n", (op == 1) ? "->" : "01");
 		printf("|     %s      |      Movimentação     |\n", (op == 2) ? "->" : "02");
 		printf("|     %s      |        Consulta       |\n", (op == 3) ? "->" : "03");
-		printf("|     %s      |          Sair         |\n", (op == 4) ? "->" : "04");
+		printf("|     %s      |    Cadastro Produto   |\n", (op == 4) ? "->" : "04");
+		printf("|     %s      |          Sair         |\n", (op == 5) ? "->" : "05");
 		printf("=======================================\n");
 		key = getch();
 		if(key == KEY_UP && op > 1) {
 			op--;
-		}else if(key == KEY_DOWN && op < 4) {
+		}else if(key == KEY_DOWN && op < 5) {
 			op++;
 		}else if(key == KEY_ESC) {
 			system("cls");
-			return 4;
+			return 5;
 		}else if(key == KEY_ENTER) {
 			resp = op;
 			system("cls");
