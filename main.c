@@ -370,6 +370,7 @@ void insercaoDeMercadorias() {
 		if(i >= 0 && i < gQuantidadeProdutos) {
 			lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto = lista_produtos[i].cod_produto;
 			lista_notas[gQuantidadeNotas].listaItensNotas[j].numero_NF = lista_notas[gQuantidadeNotas].numero_NF;
+			lista_notas[gQuantidadeNotas].listaItensNotas[j].preco_venda = lista_produtos[i].preco_unitario;
 			lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
 			printf("\tQuantidade do produto: ");
 			scanf("%i", &lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade); setbuf(stdin, NULL); system("cls");
