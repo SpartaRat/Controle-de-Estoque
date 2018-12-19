@@ -73,15 +73,21 @@ int main(void) { //Função principal
 			break;
 
 			case 2: //Função de movimentação
-				if(gQuantidadeNotas < 5) {
-					if(!gQuantidadeNotas) {
-						lista_notas[gQuantidadeNotas].numero_NF = rand() % 10000; //Gera um número de NF aleatorio para a primeira nota
+				if(gQuantidadeCliente && gQuantidadeProdutos) {
+					if(gQuantidadeNotas < 5) {
+						if(!gQuantidadeNotas) {
+							lista_notas[gQuantidadeNotas].numero_NF = rand() % 10000; //Gera um número de NF aleatorio para a primeira nota
+						}else {
+							lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF + 15; //Fixa um número de NF para a nota baseado na última nota emitida
+						}
+						movimentacoes(); // Realiza a movimentação das notas
 					}else {
-						lista_notas[gQuantidadeNotas].numero_NF = lista_notas[gQuantidadeNotas - 1].numero_NF + 15; //Fixa um número de NF para a nota baseado na última nota emitida
+						printf("\n\tNúmero máximo de notas atingido.\nNão permitido emitir novas notas\n");
 					}
-					movimentacoes(); // Realiza a movimentação das notas
-				}else {
-					printf("\n\tNúmero máximo de notas atingido.\nNão permitido emitir novas notas\n");
+				}else if(!gQuantidadeCliente) {
+					printf("\n\tNão existe nenhum cliente cadastrado até o momento!\n\n");
+				}else if(!gQuantidadeProdutos) {
+					printf("\n\tNão existe nenhum produto cadastrado até o momento!\n\n");
 				}
 			break;
 
