@@ -122,7 +122,7 @@ int main(void) { //Função principal
 void cadastros() { //Função para cadastro
 	int i, j, op, perms = 1;
 
-	printf("\n========== Menu de Cadastros ==========\n");
+	printf("\n====== Menu de Cadastros(cliente) =====\n");
 	printf("|=====================================|\n");
 	printf("|  Código     |        Operação       |\n");
 	printf("|=====================================|\n");
@@ -190,7 +190,7 @@ void cadastros() { //Função para cadastro
 			scanf("%i", &i); setbuf(stdin, NULL); system("cls");
 			for(j=0; j<gQuantidadeNotas; j++) {
 				if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
-					printf("Não é possivel excluir o cliente, pois ele possui notas em seu nome.\n");
+					printf("Não é possivel excluir o cliente, pois ele possui notas em seu nome...\n");
 					perms = 0;
 					break;
 				}
@@ -202,29 +202,119 @@ void cadastros() { //Função para cadastro
 					strcpy(lista_cliente[i].telefone, lista_cliente[j].telefone);
 					lista_cliente[i].cod_cliente = lista_cliente[j].cod_cliente;
 					i++;
-					gQuantidadeCliente--;
 				}
+				gQuantidadeCliente--;
 			}
 		break;
 	}
 }
 
 void cadastroProduto() {
-	system("cls");
-	if(!gQuantidadeProdutos) {
-		lista_produtos[gQuantidadeProdutos].cod_produto = rand() % 10000;
-	}else {
-		lista_produtos[gQuantidadeProdutos].cod_produto = lista_produtos[gQuantidadeProdutos-1].cod_produto + 10;
+	
+	int i, j, k, op = 1, perms = 1, key;
+
+	while(1){
+		system("cls");
+		printf("\nInforme a opção desejada:");
+		printf("\n===== Menu de Cadastros(Produtos) =====\n");
+		printf("|=====================================|\n");
+		printf("|  Código     |        Operação       |\n");
+		printf("|=====================================|\n");
+		printf("|     %s      |        Inclusão       |\n", (op == 1) ? "->" : "01");
+		printf("|     %s      |        Alteração      |\n", (op == 2) ? "->" : "02");
+		printf("|     %s      |        exclusão       |\n", (op == 3) ? "->" : "03");
+		printf("|     %s      |        sair           |\n", (op == 4) ? "->" : "04");
+		printf("=======================================\n");
+		key = getch();
+		if(key == KEY_DOWN && op < 4) {
+			op++;
+		}else if(key == KEY_UP && op > 1) {
+			op--;
+		}else if(key == KEY_ESC) {
+			op = 4;
+			break;
+		}else if(key == KEY_ENTER) {
+			break;
+		}
 	}
-	printf("Faça uma pequena descrição desse produto: ");
-	scanf("%[^\n]s", lista_produtos[gQuantidadeProdutos].descricao); setbuf(stdin, NULL);
-	printf("Informe a unidade: ");
-	scanf("%[^\n]s", lista_produtos[gQuantidadeProdutos].unidade); setbuf(stdin, NULL);
-	printf("Informe o preço unitário: ");
-	scanf("%f", &lista_produtos[gQuantidadeProdutos].preco_unitario); setbuf(stdin, NULL);
-	printf("Informe a quantidade em estoque: ");
-	scanf("%i", &lista_produtos[gQuantidadeProdutos].quant_estoque); setbuf(stdin, NULL);
- 	gQuantidadeProdutos++;
+	system("cls");
+	switch(op) {
+		case 1:
+			if(!gQuantidadeProdutos) {
+				lista_produtos[gQuantidadeProdutos].cod_produto = rand() % 10000;
+			}else {
+				lista_produtos[gQuantidadeProdutos].cod_produto = lista_produtos[gQuantidadeProdutos-1].cod_produto + 10;
+			}
+			printf("Faça uma pequena descrição desse produto: ");
+			scanf("%[^\n]s", lista_produtos[gQuantidadeProdutos].descricao); setbuf(stdin, NULL);
+			printf("Informe a unidade: ");
+			scanf("%[^\n]s", lista_produtos[gQuantidadeProdutos].unidade); setbuf(stdin, NULL);
+			printf("Informe o preço unitário: ");
+			scanf("%f", &lista_produtos[gQuantidadeProdutos].preco_unitario); setbuf(stdin, NULL);
+			printf("Informe a quantidade em estoque: ");
+			scanf("%i", &lista_produtos[gQuantidadeProdutos].quant_estoque); setbuf(stdin, NULL);
+		 	gQuantidadeProdutos++;
+		break;
+		
+		case 2:
+			if(gQuantidadeProdutos) {
+				printf("\n\t======= Produtos cadastrados =======\n");
+				printf("\t====================================\n");
+				for(i=0; i<gQuantidadeProdutos; i++) {
+					printf("\t\t| %02d | %d |\n", i, lista_produtos[i].cod_produto);
+				}
+				printf("\t====================================\n");
+				printf("\n\tDeseja Alterar qual produto: ");
+				scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+				printf("Faça uma pequena descrição desse produto: ");
+				scanf("%[^\n]s", lista_produtos[i].descricao); setbuf(stdin, NULL);
+				printf("Informe a unidade: ");
+				scanf("%[^\n]s", lista_produtos[i].unidade); setbuf(stdin, NULL);
+				printf("Informe o preço unitário: ");
+				scanf("%f", &lista_produtos[i].preco_unitario); setbuf(stdin, NULL);
+				printf("Informe a quantidade em estoque: ");
+				scanf("%i", &lista_produtos[i].quant_estoque); setbuf(stdin, NULL);
+			}else {
+				printf("\n\tNão existe nenhum produto cadastrado...\n");
+			}
+		break;
+		
+ 		case 3:
+			if(gQuantidadeProdutos) {
+				printf("\n\t======= Produtos cadastrados =======\n");
+				printf("\t====================================\n");
+				for(i=0; i<gQuantidadeProdutos; i++) {
+					printf("\t\t| %02d | %d |\n", i, lista_produtos[i].cod_produto);
+				}
+				printf("\t====================================\n");
+				printf("\n\tDeseja Excluir qual produto: ");
+				scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+				for(j=0; j<gQuantidadeNotas; j++) {
+					for(k=0; k<lista_notas[j].quantidadeItensNota; j++) {
+						if(lista_notas[j].listaItensNotas[k].cod_produto == lista_produtos[i].cod_produto) {
+							perms = 0;
+						}
+					}
+				}
+				if(perms) {
+					while(i<gQuantidadeProdutos) {
+						j = i+1;
+						lista_produtos[i].cod_produto = lista_produtos[j].cod_produto;
+						lista_produtos[i].preco_unitario = lista_produtos[j].preco_unitario;
+						lista_produtos[i].quant_estoque = lista_produtos[j].quant_estoque;
+						lista_produtos[i].cod_produto = lista_produtos[j].cod_produto;
+						strcpy(lista_produtos[i].descricao, lista_produtos[j].descricao);
+						strcpy(lista_produtos[i].unidade, lista_produtos[j].unidade);
+					}
+					gQuantidadeProdutos--;
+				}else {
+					printf("\n\tNão foi possivel excluir o produto...\n");
+				}
+			}else {
+				printf("\n\tNão existe nenhum produto cadastrado...\n");
+			}
+		break;
+	}
 }
 
 void movimentacoes() { //Função para movimentação
