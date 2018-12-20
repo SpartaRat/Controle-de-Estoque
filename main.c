@@ -391,15 +391,15 @@ void consultas() { //Função para consultas
 	switch(operacao) {
 		case 1: //Pesquisa por faixa de preço
 			if(gQuantidadeProdutos) {
-				printf("\tInforme uma faixa de preço para consulta: ");
-				printf("Preço minimo: ");
+				printf("\tInforme uma faixa de preço para consulta:\n");
+				printf("\nPreço minimo: ");
 				scanf("%f", &min); setbuf(stdin, NULL);
 				printf("Preço máximo: ");
 				scanf("%f", &max); setbuf(stdin, NULL);
 				for(i=0; i<gQuantidadeProdutos; i++) {
 					if(lista_produtos[i].preco_unitario >= min && lista_produtos[i].preco_unitario <= max) {
 						found = 1;
-						printf("| Código do produto: %d | Quantidade em estoque: %d | Preço unitário: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
+						printf("\t| Código do produto: %d | Quantidade em estoque: %d | Preço unitário: R$%.2f\n", lista_produtos[i].cod_produto, lista_produtos[i].quant_estoque, lista_produtos[i].preco_unitario);
 					}
 				}
 				if(!found) {
@@ -502,24 +502,32 @@ void insercaoDeMercadorias() {
 					lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade = lista_produtos[i].quant_estoque;
 					lista_produtos[i].quant_estoque = 0;
 				}
-				while(j == 0 && !resp) {
-					system("cls");
-					printf("Esse cliente comprou mais algum produto?\n");
-			  		printf("\n%s SIM\n", (op == 0) ? "->" : " ");
-					printf("%s NÃO\n", (op == 1) ? "->" : " ");
-					key = getch();
-					if(key == KEY_UP && op > 0) {
-						op--;
-					}else if(key == KEY_DOWN && op < 1) {
-						op++;
-					}else if(key == KEY_ESC) {
-						resp = 1;
-					}else if(key == KEY_ENTER) {
-						j++;
-						lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
-						resp = op;
-					}
-					system("cls");
+				if(gQuantidadeProdutos > 1) {
+					while((j == 0 && !resp)) {
+						system("cls");
+						printf("Esse cliente comprou mais algum produto?\n");
+				  		printf("\n%s SIM\n", (op == 0) ? "->" : " ");
+						printf("%s NÃO\n", (op == 1) ? "->" : " ");
+						key = getch();
+						if(key == KEY_UP && op > 0) {
+							op--;
+						}else if(key == KEY_DOWN && op < 1) {
+							op++;
+						}else if(key == KEY_ESC) {
+							j++;
+							lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
+							resp = 1;
+						}else if(key == KEY_ENTER) {
+							j++;
+							lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
+							resp = op;
+						}
+						system("cls");
+					}				
+				}else {
+					j++;
+					lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
+					resp = 1;
 				}
 			}else if(j==1){
 				if(lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto == lista_notas[gQuantidadeNotas].listaItensNotas[j-1].cod_produto){
