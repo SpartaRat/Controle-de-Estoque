@@ -92,14 +92,18 @@ int main(void) { //Função principal
 			break;
 
 			case 3: //Função de consultas
-				consultas();
+				if(gQuantidadeNotas){
+					consultas();
+				}else {
+					printf("\nNão existe nenhuma nota cadastrada até o momento...\n\n");
+				}
 			break;
 
 			case 4:
 				if(gQuantidadeProdutos < 6){
 					cadastroProduto();
 				}else {
-					printf("\a\n\tNão é possivel cadastrar mais produtos!\n");
+					printf("\a\n\tNão é possivel cadastrar mais produtos!\n\n");
 				}
 			break;
 			
@@ -120,19 +124,32 @@ int main(void) { //Função principal
 }
 
 void cadastros() { //Função para cadastro
-	int i, j, op, perms = 1;
+	int i, j, op = 1, perms = 1, key;
 
-	printf("\n====== Menu de Cadastros(cliente) =====\n");
-	printf("|=====================================|\n");
-	printf("|  Código     |        Operação       |\n");
-	printf("|=====================================|\n");
-	printf("|     01      |        Inclusão       |\n");
-	printf("|     02      |        Alteração      |\n");
-	printf("|     03      |        exclusão       |\n");
-	printf("=======================================\n");
-	
-	printf("\n\nQual a opção desejada: ");
-	scanf("%i", &op); setbuf(stdin, NULL);
+	while(1) {
+		system("cls");
+		printf("\nQual a opção desejada: ");
+		printf("\n====== Menu de Cadastros(cliente) =====\n");
+		printf("|=====================================|\n");
+		printf("|  Código     |        Operação       |\n");
+		printf("|=====================================|\n");
+		printf("|     %s      |        Inclusão       |\n", (op == 1) ? "->" : "01");
+		printf("|     %s      |        Alteração      |\n", (op == 2) ? "->" : "02");
+		printf("|     %s      |        exclusão       |\n", (op == 3) ? "->" : "03");
+		printf("|     %s      |        Sair           |\n", (op == 4) ? "->" : "04");
+		printf("=======================================\n");
+		key = getch();
+		if(key == KEY_DOWN && op < 4) {
+			op++;
+		}else if(key == KEY_UP && op > 1) {
+			op--;
+		}else if(key == KEY_ESC) {
+			op = 4;
+			break;
+		}else if(key == KEY_ENTER) {
+			break;
+		}
+	}
 
 	switch(op) {
 		case 1: // Cadastro de cliente
@@ -181,29 +198,33 @@ void cadastros() { //Função para cadastro
 		break;
 
 		case 3: //Exclusão de cliente
-			printf("\n\t======= Clientes cadastrados =======\n");
-			printf("\t====================================\n");
-			for(i=0; i<gQuantidadeCliente; i++) {
-				printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
-			}
-			printf("Informe qual cliente deseja excluir: ");
-			scanf("%i", &i); setbuf(stdin, NULL); system("cls");
-			for(j=0; j<gQuantidadeNotas; j++) {
-				if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
-					printf("Não é possivel excluir o cliente, pois ele possui notas em seu nome...\n");
-					perms = 0;
-					break;
+			if(gQuantidadeCliente) {
+				printf("\n\t======= Clientes cadastrados =======\n");
+				printf("\t====================================\n");
+				for(i=0; i<gQuantidadeCliente; i++) {
+					printf("\t\t| %02d | %d |\n", i, lista_cliente[i].cod_cliente);
 				}
-			}
-			if(perms == 1) {
-				while(i < gQuantidadeCliente) {
-					j = i+1;
-					strcpy(lista_cliente[i].endereco, lista_cliente[j].endereco);
-					strcpy(lista_cliente[i].telefone, lista_cliente[j].telefone);
-					lista_cliente[i].cod_cliente = lista_cliente[j].cod_cliente;
-					i++;
+				printf("Informe qual cliente deseja excluir: ");
+				scanf("%i", &i); setbuf(stdin, NULL); system("cls");
+				for(j=0; j<gQuantidadeNotas; j++) {
+					if(lista_notas[j].cod_cliente == lista_cliente[i].cod_cliente) {
+						printf("Não é possivel excluir o cliente, pois ele possui notas em seu nome...\n");
+						perms = 0;
+						break;
+					}
 				}
-				gQuantidadeCliente--;
+				if(perms == 1) {
+					while(i < gQuantidadeCliente) {
+						j = i+1;
+						strcpy(lista_cliente[i].endereco, lista_cliente[j].endereco);
+						strcpy(lista_cliente[i].telefone, lista_cliente[j].telefone);
+						lista_cliente[i].cod_cliente = lista_cliente[j].cod_cliente;
+						i++;
+					}
+					gQuantidadeCliente--;
+				}
+			}else {
+				printf("\n\tNão existe nenhum cliente cadastrado até o momento!\n\n");
 			}
 		break;
 	}
@@ -275,7 +296,7 @@ void cadastroProduto() {
 				printf("Informe a quantidade em estoque: ");
 				scanf("%i", &lista_produtos[i].quant_estoque); setbuf(stdin, NULL);
 			}else {
-				printf("\n\tNão existe nenhum produto cadastrado...\n");
+				printf("\n\tNão existe nenhum produto cadastrado...\n\n");
 			}
 		break;
 		
@@ -308,10 +329,10 @@ void cadastroProduto() {
 					}
 					gQuantidadeProdutos--;
 				}else {
-					printf("\n\tNão foi possivel excluir o produto...\n");
+					printf("\n\tNão foi possivel excluir o produto...\n\n");
 				}
 			}else {
-				printf("\n\tNão existe nenhum produto cadastrado...\n");
+				printf("\n\tNão existe nenhum produto cadastrado...\n\n");
 			}
 		break;
 	}
