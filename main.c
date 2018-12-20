@@ -21,6 +21,8 @@ void consultas();
 void insercaoDeMercadorias();
 int menuPrincipal();
 void cadastroProduto();
+void load();
+void store();
 
 //Declaração de variáveis globais
 int gQuantidadeCliente = 0;
@@ -58,11 +60,17 @@ struct { //Estruturas para cadastro de produtos
 	int quant_estoque;
 } produtos, lista_produtos[6];
 
+//Declaração de ponteiro para arquivos
+FILE *fileClientes;
+FILE *fileNotas;
+FILE *fileProdutos;
+FILE *fileConfigs;
+
 //Criação de funções
 int main(void) { //Função principal
 	setlocale(LC_ALL, "Portuguese");
+	load();
 	srand(time(NULL));
-
 	int pause = 0, op = 2;
 
 	while(!pause) {
@@ -109,6 +117,7 @@ int main(void) { //Função principal
 			
 			case 5:
 				pause = 1;
+				store();
 				printf("\n\tPrograma finalizado com sucesso...\n\n");
 			break;
 
@@ -562,4 +571,62 @@ int menuPrincipal() {
 			return resp;
 		}
 	}
+}
+
+void load() {
+	int i, j;
+
+	fileConfigs = fopen("configs.txt", "r");
+	fscanf(fileConfigs, "%i %i %i\n", &gQuantidadeCliente, &gQuantidadeNotas, &gQuantidadeProdutos);
+	fclose(fileConfigs);
+
+	fileClientes = fopen("clientes.txt", "r");
+	for(i=0; i<gQuantidadeCliente; i++) {
+		fscanf(fileClientes, "%i %s %s\n", &lista_cliente[i].cod_cliente, lista_cliente[i].endereco, lista_cliente[i].telefone);
+	}
+	fclose(fileClientes);
+
+	fileProdutos = fopen("produtos.txt", "r");
+	for(i=0; i<gQuantidadeProdutos; i++) {
+		fscanf(fileProdutos, "%i %s %f %i\n%s\n", &lista_produtos[i].cod_produto, lista_produtos[i].unidade, &lista_produtos[i].preco_unitario, &lista_produtos[i].quant_estoque, lista_produtos[i].descricao);
+	}
+	fclose(fileProdutos);
+
+	fileNotas = fopen("notas.txt", "r");
+	for(i=0; i<gQuantidadeNotas; i++) {
+		fscanf(fileNotas, "%i %i %i\n", lista_notas[i].numero_NF, lista_notas[i].cod_cliente, lista_notas[i].quantidadeItensNota);
+		for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
+			fscanf(fileNotas, "%i %i %i %f\n", &lista_notas[i].listaItensNotas[j].numero_NF, &lista_notas[i].listaItensNotas[j].cod_produto, &lista_notas[i].listaItensNotas[j].quantidade, &lista_notas[i].listaItensNotas[j].preco_venda);
+		}
+	}
+	fclose(fileNotas);
+}
+
+void store() {
+	int i, j;
+	
+	fileConfigs = fopen("configs.txt", "w");
+	fprintf(fileConfigs, "%i %i %i\n", gQuantidadeCliente, gQuantidadeNotas, gQuantidadeProdutos);
+	fclose(fileConfigs);
+	
+	fileClientes = fopen("clientes.txt", "w");
+	for(i=0; i<gQuantidadeCliente; i++) {
+		fprintf(fileClientes, "%i %s %s\n", lista_cliente[i].cod_cliente, lista_cliente[i].endereco, lista_cliente[i].telefone);
+	}
+	fclose(fileClientes);
+
+	fileProdutos = fopen("produtos.txt", "w");
+	for(i=0; i<gQuantidadeProdutos; i++) {
+		fprintf(fileProdutos, "%i %s %f %i\n%s\n", lista_produtos[i].cod_produto, lista_produtos[i].unidade, lista_produtos[i].preco_unitario, lista_produtos[i].quant_estoque, lista_produtos[i].descricao);
+	}
+	fclose(fileProdutos);
+	
+	fileNotas = fopen("notas.txt", "w");
+	for(i=0; i<gQuantidadeNotas; i++) {
+		fprintf(fileNotas, "%i %i %i\n", lista_notas[i].numero_NF, lista_notas[i].cod_cliente, lista_notas[i].quantidadeItensNota);
+		for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
+			fprintf(fileNotas, "%i %i %i %f\n", lista_notas[i].listaItensNotas[j].numero_NF, lista_notas[i].listaItensNotas[j].cod_produto, lista_notas[i].listaItensNotas[j].quantidade, lista_notas[i].listaItensNotas[j].preco_venda);
+		}
+	}
+	fclose(fileNotas);
 }
