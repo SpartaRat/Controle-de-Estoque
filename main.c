@@ -490,7 +490,8 @@ void insercaoDeMercadorias() {
 		if(i >= 0 && i < gQuantidadeProdutos) {
 			lista_notas[gQuantidadeNotas].listaItensNotas[j].cod_produto = lista_produtos[i].cod_produto;
 			lista_notas[gQuantidadeNotas].listaItensNotas[j].numero_NF = lista_notas[gQuantidadeNotas].numero_NF;
-			lista_notas[gQuantidadeNotas].listaItensNotas[j].preco_venda = lista_produtos[i].preco_unitario;
+			printf("\nQual foi o preço de venda desse produto: ");
+			scanf("%f", &lista_notas[gQuantidadeNotas].listaItensNotas[j].preco_venda); setbuf(stdin, NULL);
 			lista_notas[gQuantidadeNotas].quantidadeItensNota = j;
 			printf("\tQuantidade do produto: ");
 			scanf("%i", &lista_notas[gQuantidadeNotas].listaItensNotas[j].quantidade); setbuf(stdin, NULL); system("cls");
@@ -577,24 +578,24 @@ void load() {
 	int i, j;
 
 	fileConfigs = fopen("configs.txt", "r");
-	fscanf(fileConfigs, "%i %i %i\n", &gQuantidadeCliente, &gQuantidadeNotas, &gQuantidadeProdutos);
+	fscanf(fileConfigs, "%i %i %i\n", &gQuantidadeCliente, &gQuantidadeNotas, &gQuantidadeProdutos); setbuf(stdin, NULL);
 	fclose(fileConfigs);
 
 	fileClientes = fopen("clientes.txt", "r");
 	for(i=0; i<gQuantidadeCliente; i++) {
-		fscanf(fileClientes, "%i %s %s\n", &lista_cliente[i].cod_cliente, lista_cliente[i].endereco, lista_cliente[i].telefone);
+		fscanf(fileClientes, "%i %s %s\n", &lista_cliente[i].cod_cliente, &lista_cliente[i].endereco, &lista_cliente[i].telefone); setbuf(stdin, NULL);
 	}
 	fclose(fileClientes);
 
 	fileProdutos = fopen("produtos.txt", "r");
 	for(i=0; i<gQuantidadeProdutos; i++) {
-		fscanf(fileProdutos, "%i %s %f %i\n%s\n", &lista_produtos[i].cod_produto, lista_produtos[i].unidade, &lista_produtos[i].preco_unitario, &lista_produtos[i].quant_estoque, lista_produtos[i].descricao);
+		fscanf(fileProdutos, "%i %s %f %i\n%[^\n]s\n", &lista_produtos[i].cod_produto, &lista_produtos[i].unidade, &lista_produtos[i].preco_unitario, &lista_produtos[i].quant_estoque, &lista_produtos[i].descricao);
 	}
 	fclose(fileProdutos);
 
 	fileNotas = fopen("notas.txt", "r");
 	for(i=0; i<gQuantidadeNotas; i++) {
-		fscanf(fileNotas, "%i %i %i\n", lista_notas[i].numero_NF, lista_notas[i].cod_cliente, lista_notas[i].quantidadeItensNota);
+		fscanf(fileNotas, "%i %i %i\n", &lista_notas[i].numero_NF, &lista_notas[i].cod_cliente, &lista_notas[i].quantidadeItensNota);
 		for(j=0; j<lista_notas[i].quantidadeItensNota; j++) {
 			fscanf(fileNotas, "%i %i %i %f\n", &lista_notas[i].listaItensNotas[j].numero_NF, &lista_notas[i].listaItensNotas[j].cod_produto, &lista_notas[i].listaItensNotas[j].quantidade, &lista_notas[i].listaItensNotas[j].preco_venda);
 		}
